@@ -29,12 +29,3 @@ export const Card = styled.div`
   margin-top: 40px;
   width: 300px;
 `;
-
-export const LoginButton = styled.button`
-  background-color: ${({ theme }) => theme.secondary};
-  padding: 10px 20px;
-  border-radius: 20px;
-  color: ${({ theme }) => theme.text};
-  margin-top: 20px;
-  cursor: pointer;
-`;

@@ -7,7 +7,7 @@ import Icon from "../../media/cat-animal-icon.png";
 
 export default function Layout() {
   const navigate = useNavigate();
-  const { user } = useContext(UserContext);
+  const { user, handleLogout } = useContext(UserContext);
 
   const { token } = user || {};
 
@@ -18,7 +18,19 @@ export default function Layout() {
         <NavigateLink to="/">Home</NavigateLink>
         {!token && <NavigateLink to="/login">Login</NavigateLink>}
         {!token && <NavigateLink to="/register">Register</NavigateLink>}
+        {/* {token && <NavigateLink to="/favourite">Favourite</NavigateLink>} */}
+        {token && (
+          <NavigateLink
+            onClick={() => {
+              handleLogout();
+            }}
+            to="/login"
+          >
+            Logout
+          </NavigateLink>
+        )}
       </Container>
+
       <Outlet />
     </Wrapper>
   );

@@ -1,16 +1,18 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { UserContext } from "../../App";
 import { useForm, Controller } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { Input } from "antd";
-import { Form, Container, Card, Title, LoginButton } from "./styles";
+import { Input, Button } from "antd";
+import { Form, Container, Card, Title } from "./styles";
 import { useNavigate } from "react-router-dom";
 import ToastMessageHandler from "../../components/ToastMessage";
 
 export default function Register() {
   const navigate = useNavigate();
   const { signUp } = useContext(UserContext);
+
+  const [isLoading, setIsLaoding] = useState(false);
 
   const {
     handleSubmit,
@@ -36,11 +38,14 @@ export default function Register() {
 
   async function onSubmit(data) {
     try {
+      setIsLaoding(true);
       await signUp(data);
       ToastMessageHandler("Registration Successful!", "success");
       navigate("/login");
     } catch (error) {
       ToastMessageHandler("Service Error!", "error");
+    } finally {
+      setIsLaoding(false);
     }
   }
 
@@ -99,7 +104,14 @@ export default function Register() {
             )}
           />
 
-          <LoginButton type="submit">Login</LoginButton>
+          <Button
+            style={{ marginTop: 20 }}
+            loading={isLoading}
+            htmlType="submit"
+            type="primary"
+          >
+            Register
+          </Button>
         </Card>
       </Container>
     </Form>
